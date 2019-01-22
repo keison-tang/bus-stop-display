@@ -3,10 +3,12 @@
 ## What?
 Project that aims to create a miniature version of the arrival time displays you see at bus stops and stations.
 
+Home bus stop - 3211
+
 ## Components
 - Auckland Transport APIs
     - The source of real-time bus information
-- Orange Pi
+- Either Orange Pi or custom website (Azure)
     - Web Server
     - Listens to API requests from Wemos, calls AT APIs, processes, returns info
     - May need to call other APIs from Google etc..
@@ -20,8 +22,10 @@ Project that aims to create a miniature version of the arrival time displays you
 
 ## APIs
 ### Auckland Transport
-- TODO: explore what APIs are relevant
-### Orange PI
-- HTTP GET getTimes
+- GET Departures
+    - https://api.at.govt.nz/v2/public-restricted/departures/{stopid}?subscription-key={subscription_key}
+
+### Orange Pi / Website
+- GET getTimes
     - Params: bus stop #
     - Returns: List of bus # and estimated arrival times
