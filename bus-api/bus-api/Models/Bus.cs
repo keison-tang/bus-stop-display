@@ -7,9 +7,9 @@ namespace bus_api.Models
 {
     public class SimpleMovement
     {
-        //route number, scheduled time, expected time to arrive
-        public string Route { get; set; }
-        public string SchTime { get; set; }
-        public string DueTime { get; set; }
+        //route number, scheduled time, due time
+        public string Bus { get; set; }
+        public string Sch { get; set; }
+        public string Due { get; set; }
     }
 }

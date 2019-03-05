@@ -63,6 +63,7 @@ Home bus stop - 3211
 4. Add an Application Setting called AT_API_KEY and put your API key in the Value
 5. Deployment via IDE (my way) - you could deploy using Azure portal
     - Open the project in VS2017
+    - Restore NuGet packages, Clean & Rebuild etc
     - Build > Publish bus-api
     - Select the App service that you created in Azure portal.
     - Publish!! - if it fails, just retry

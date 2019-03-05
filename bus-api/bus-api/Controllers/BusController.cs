@@ -25,12 +25,22 @@ namespace bus_api.Controllers
         /// Lightweight version of the GET Departures API from AT targetting embedded IoT devices
         /// </summary>
         /// <param name="stop_id">Bus stop ID number</param>
+        /// <param name="results">Maximum number of results</param>
         /// <returns></returns>
         [HttpGet]
         [System.Web.Http.Route("api/departures")]
-        public List<SimpleMovement> Departures(string stop_id)
+        public List<SimpleMovement> Departures(string stop_id, int? results = null)
         {
-            return SimpleDepartures(stop_id);
+            List<SimpleMovement> simpleMovements = SimpleDepartures(stop_id);
+
+            if ((results != null) && (results < simpleMovements.Count))
+            {
+                //crop and return list
+                return simpleMovements.GetRange(0, (int)results);
+            } else  //results = null, results = count, results > count
+            {
+                return simpleMovements;
+            }
         }
 
         /// <summary>
@@ -51,10 +61,10 @@ namespace bus_api.Controllers
                 SimpleMovement simple = new SimpleMovement { };
 
                 //Bus route
-                simple.Route = movement.route_short_name;
+                simple.Bus = movement.route_short_name;
 
                 //Scheduled arrival time (timetable)
-                simple.SchTime = UTCtoNZST(movement.scheduledArrivalTime).ToShortTimeString();    //convert UTC to NZST, then get time string
+                simple.Sch = UTCtoNZST(movement.scheduledArrivalTime).ToShortTimeString();    //convert UTC to NZST, then get time string
 
                 //Due time (real time tracking)
                 if (movement.monitored)
@@ -64,20 +74,20 @@ namespace bus_api.Controllers
 
                     if (mins <= 0)
                     {
-                        simple.DueTime = "*";
+                        simple.Due = "*";
                     }
                     else
                     {
-                        simple.DueTime = Math.Floor(mins).ToString();
+                        simple.Due = Math.Floor(mins).ToString();
                     }
                 }
                 else if (movement.arrivalStatus == "cancelled")
                 {
-                    simple.DueTime = "C";   //cancelled
+                    simple.Due = "C";   //cancelled
                 }
                 else
                 {
-                    simple.DueTime = "";    //untracked
+                    simple.Due = "";    //untracked
                 }
 
                 services.Add(simple);
