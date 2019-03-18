@@ -1,4 +1,4 @@
-# bus-stop-display
+﻿# bus-stop-display
 
 ## What?
 Project that aims to create a miniature version of the arrival time displays you see at bus stops and stations.
@@ -60,7 +60,9 @@ Home bus stop - 3211
 - Next step: hardware side
     - Play around with WeMos D1 mini
     - Find out JSON capability, GET requests etc..
-    - GET A SOLDERING IRON
+- Future TODO:
+    - Refactor backend API app for properness
+    - Display current time?
 
 ### {Draft} Instructions for deploying API App to Azure
 1. Create Azure acc
@@ -79,3 +81,18 @@ Home bus stop - 3211
         - e.g http://[YOUR API APP NAME].azurewebsites.net/swagger/ui/index
     - You can enable/disable the Swagger UI by going to SwaggerConfig.cs, ~line 192
     - There is no home landing page as it is an API app, which doesn't have a View component, only Model and Controller
+
+
+### Connecting D1 Mini to OLED module (I2C version)
+- Adafruit SSD1306 library
+    - Only have #define SSD1306_128_64 uncommented in the .h file
+    - Tested using ssd1306_128x64_i2c example sketch
+        - Change OLED_RESET pin number to -1 
+            - Original number was 4, did not work.
+            - Reset pin is not used on 4-pin OLED module
+        - Change address to 0x3C
+- Wiring (OLED to D1 mini)
+    - GND to G
+    - VCC to 3V3 (5V also works)
+    - SCL to D1
+    - SDA to D2
