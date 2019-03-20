@@ -80,6 +80,8 @@ void loop() {
         //Serial.println(service["Due"].as<char*>()); 
         display.setCursor(0, BODY_CURSOR_Y + lineCount*8);
         // + " " + service["Sch"] + " " + service["Due"];
+        //display.print("                     ");
+        //display.display();
         display.print(service["Bus"].as<char*>());
         display.print("    ");
         display.print(service["Sch"].as<char*>());
@@ -93,7 +95,7 @@ void loop() {
 
       while (lineCount <= 6) {
         display.setCursor(0, BODY_CURSOR_Y + lineCount*8);
-        display.print("Blank line");
+        display.print("-                    "); //Blank line
         lineCount++;
 
         display.display();
@@ -110,7 +112,7 @@ void loop() {
     http.end();
   }
   
-  //delay for 20 seconds
+  //delay for 10 seconds
   delay(10000);
   
 }

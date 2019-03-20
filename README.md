@@ -64,7 +64,10 @@ Home bus stop - 3211
     - Refactor backend API app for properness
     - API functionality
         - Return current time?
-        - Handle when there are no services available - because of outage or there just aren't any buses
+        - Handle when there are no services available - either because of outage or there just aren't any buses
+- Able to display nearest six services, but there is a bug
+    - When due time changes from >10 to less than 10, the trailing digit is not updated because of the way the OLED lines are printed
+    - e.g display shows 10 -> 90 -> 80 -> 70...
 
 ### {Draft} Instructions for deploying API App to Azure
 1. Create Azure acc
