@@ -62,7 +62,9 @@ Home bus stop - 3211
     - Find out JSON capability, GET requests etc..
 - Future TODO:
     - Refactor backend API app for properness
-    - Display current time?
+    - API functionality
+        - Return current time?
+        - Handle when there are no services available - because of outage or there just aren't any buses
 
 ### {Draft} Instructions for deploying API App to Azure
 1. Create Azure acc

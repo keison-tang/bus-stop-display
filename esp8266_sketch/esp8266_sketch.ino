@@ -1,16 +1,17 @@
-#include <ESP8266WiFi.h>  //Boards Manager > ESP8266
+#include <ESP8266WiFi.h>        // Boards Manager > ESP8266
 #include <ESP8266HTTPClient.h>
-#include <Wire.h> //I2C
-#include <Adafruit_GFX.h> //OLED graphics
-#include <Adafruit_SSD1306.h>  //OLED hardware driver
-#include <ArduinoJson.h>  //Library for JSON parsing etc
-#include <Credentials.h>  //custom library for credentials (path: */Documents/Arduino/libraries/Credentials)
+#include <Wire.h>               //I2C
+#include <Adafruit_GFX.h>       //Graphics
+#include <Adafruit_SSD1306.h>   //OLED hardware driver
+#include <ArduinoJson.h>        //Library for JSON parsing
+#include <Credentials.h>        //Custom library for credentials (path: */Documents/Arduino/libraries/Credentials)
 
 // OLED
-#define SCREEN_WIDTH 128  //pixels
-#define SCREEN_HEIGHT 64  //pixels
-#define OLED_RESET -1 //shared reset pin
-#define OLED_ADDR 0x3C
+#define SCREEN_WIDTH 128  //in pixels
+#define SCREEN_HEIGHT 64  //in pixels
+#define OLED_RESET -1     //reset pin is unused
+#define OLED_ADDR 0x3C 
+#define BODY_CURSOR_Y 16  //Y pixel position of where blue part (aka body) of OLED starts
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 // WiFi  
@@ -43,10 +44,11 @@ void setup() {
 
   display.setTextSize(2); //1: 6x8px 21x8chars, 2: 12x16px 10x4chars
   display.setCursor(4, 0);
-  display.print("STOP# 3211");  //static text at the top of the OLED - show whatever text you like
+  display.print("STOP# 3360");  //static text at the top of the OLED - show whatever text you like, max 10 chars
   display.display(); 
 
   display.setTextSize(1);
+  display.setTextColor(WHITE, BLACK); //to overwrite text with fresh background (otherwise text is superimposed)
   
 }
 
@@ -58,13 +60,57 @@ void loop() {
   
     if (httpCode > 0) {
       String payload = http.getString();
-      Serial.println(payload + "\n");  
+
+      //Allocate JsonBuffer for max 6 results
+      const size_t capacity = JSON_ARRAY_SIZE(6) + 6*JSON_OBJECT_SIZE(3) + 180;
+      DynamicJsonBuffer jsonBuffer(capacity);
+
+      //Parse JSON object (which is just the array)
+      JsonArray& services = jsonBuffer.parseArray(payload);
+
+      //Get num of elements in array
+      int elements = services.size();
+      int lineCount = 0;
+
+      //Update appropriate number of lines on display
+      for (JsonObject& service : services) {
+        //Print the values of each service entry
+        //Serial.print(service["Bus"].as<char*>()); 
+        //Serial.print(service["Sch"].as<char*>()); 
+        //Serial.println(service["Due"].as<char*>()); 
+        display.setCursor(0, BODY_CURSOR_Y + lineCount*8);
+        // + " " + service["Sch"] + " " + service["Due"];
+        display.print(service["Bus"].as<char*>());
+        display.print("    ");
+        display.print(service["Sch"].as<char*>());
+        display.print("    ");
+        display.print(service["Due"].as<char*>());
+        
+        lineCount++;
+
+        display.display();
+      }
+
+      while (lineCount <= 6) {
+        display.setCursor(0, BODY_CURSOR_Y + lineCount*8);
+        display.print("Blank line");
+        lineCount++;
+
+        display.display();
+      }
+
+      display.display();
+      //Serial.print("Num of elements:");  
+      //Serial.println(elements);
+      
+    } else {
+      Serial.println("HTTP.GET failed");      
     }
     
     http.end();
   }
   
   //delay for 20 seconds
-  delay(20000);
+  delay(10000);
   
 }
