@@ -7,11 +7,11 @@
 #include <Credentials.h>        //Custom library for credentials (path: */Documents/Arduino/libraries/Credentials)
 
 // OLED
-#define SCREEN_WIDTH 128  //in pixels
-#define SCREEN_HEIGHT 64  //in pixels
-#define OLED_RESET -1     //reset pin is unused
-#define OLED_ADDR 0x3C 
-#define BODY_CURSOR_Y 16  //Y pixel position of where blue part (aka body) of OLED starts
+#define SCREEN_WIDTH   128  //in pixels
+#define SCREEN_HEIGHT   64  //in pixels
+#define OLED_RESET      -1  //reset pin is unused
+#define OLED_ADDR     0x3C 
+#define BODY_CURSOR_Y   16  //Y pixel position of where blue part (aka body) of OLED starts
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 // WiFi  
@@ -61,49 +61,36 @@ void loop() {
     if (httpCode > 0) {
       String payload = http.getString();
 
-      //Allocate JsonBuffer for max 6 results
+      // Allocate JsonBuffer for max 6 results
       const size_t capacity = JSON_ARRAY_SIZE(6) + 6*JSON_OBJECT_SIZE(3) + 180;
       DynamicJsonBuffer jsonBuffer(capacity);
 
-      //Parse JSON object (which is just the array)
+      // Parse JSON object (which is just the array)
       JsonArray& services = jsonBuffer.parseArray(payload);
 
-      //Get num of elements in array
-      int elements = services.size();
+      // To keep count of which line we are updating
       int lineCount = 0;
 
-      //Update appropriate number of lines on display
+      // Update appropriate number of lines with bus services
       for (JsonObject& service : services) {
-        //Print the values of each service entry
-        //Serial.print(service["Bus"].as<char*>()); 
-        //Serial.print(service["Sch"].as<char*>()); 
-        //Serial.println(service["Due"].as<char*>()); 
-        display.setCursor(0, BODY_CURSOR_Y + lineCount*8);
-        // + " " + service["Sch"] + " " + service["Due"];
-        //display.print("                     ");
-        //display.display();
+        display.setCursor(0, BODY_CURSOR_Y + lineCount * 8);  //set cursor to point to appropriate line
         display.print(service["Bus"].as<char*>());
         display.print("    ");
         display.print(service["Sch"].as<char*>());
         display.print("    ");
         display.print(service["Due"].as<char*>());
-        
+        display.print("  ");  //to clear off any remanant characters from previous update
         lineCount++;
-
-        display.display();
       }
 
+      // Fill the rest of the display with blank lines when there are <6 services available
       while (lineCount <= 6) {
-        display.setCursor(0, BODY_CURSOR_Y + lineCount*8);
+        display.setCursor(0, BODY_CURSOR_Y + lineCount * 8);
         display.print("-                    "); //Blank line
         lineCount++;
-
-        display.display();
       }
 
       display.display();
-      //Serial.print("Num of elements:");  
-      //Serial.println(elements);
       
     } else {
       Serial.println("HTTP.GET failed");      

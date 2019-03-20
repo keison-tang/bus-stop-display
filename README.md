@@ -1,22 +1,24 @@
 ﻿# bus-stop-display
 
 ## What?
-Project that aims to create a miniature version of the arrival time displays you see at bus stops and stations.
+Project that aims to recreate a miniature version of the real-time boards seen at bus stops and stations around Auckland. These typically show the current time, stop number and estimated arrival times of bus services that travel past the stop.
 
-Home bus stop - 3211
+Currently, this project is able to display the stop number and a maximum of six of the nearest bus services. 
+
+## How?
+A WiFi module periodically calls an API app hosted on Azure, which in turn calls an AT API. The purpose of the API app is to process the original payload into a simpler JSON schema containing only the necessary information required by the WiFi module. The simplified schema makes it suitable for memory and computationally constrained devices. The WiFi module then parses the JSON and then displays the information through a small OLED. 
 
 ## Components
-- Auckland Transport APIs
-    - The source of real-time bus information
-- API App hosted on Azure App Service
-    - Does most of the processing as WeMos is weak and memory constrained 
-    - Listens for API requests
-- WeMos D1 Mini 
-    - Periodically call the API on the web server to get simplified real-time info
-    - Process info
-    - Send info to OLED display
-- 0.96" OLED Module
-    - Display the info to me
+- Software
+    - Auckland Transport (AT) API
+    - Microsoft Azure 
+    - API App hosted on Azure App Service
+- Hardware
+    - WeMos D1 Mini (ESP8266 - WiFi enabled microcontroller)
+    - 0.96" OLED Module (I2C, monochrome)
+    - 4 x M-M jumper wires
+    - Medium breadboard
+    - Micro USB cable
 
 ## APIs
 - GET /api/departures
@@ -53,14 +55,8 @@ Home bus stop - 3211
             ```
 
 ### So far:
-- API App largely done 
-    - May need to tweak response schema, depending on WiFi module capability
-    - Deployed to Azure App Service
-    - AT API key is stored in App Settings - accessed through Azure - very secure ✔️✔️✔️
-- Next step: hardware side
-    - Play around with WeMos D1 mini
-    - Find out JSON capability, GET requests etc..
-- Future TODO:
+- AT API key is stored in App Settings - accessed through Azure - very secure ✔️✔️✔️
+- Future Work:
     - Refactor backend API app for properness
     - API functionality
         - Return current time?
