@@ -12,4 +12,10 @@ namespace bus_api.Models
         public string Sch { get; set; }
         public string Due { get; set; }
     }
+
+    public class SimpleResponse
+    {
+        public string Time { get; set; }
+        public List<SimpleMovement> SimpleMovements { get; set; }
+    }
 }

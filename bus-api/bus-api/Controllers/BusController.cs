@@ -29,18 +29,21 @@ namespace bus_api.Controllers
         /// <returns></returns>
         [HttpGet]
         [System.Web.Http.Route("api/departures")]
-        public List<SimpleMovement> Departures(string stop_id, int? results = null)
+        public SimpleResponse Departures(string stop_id, int? results = null)
         {
             List<SimpleMovement> simpleMovements = SimpleDepartures(stop_id);
 
             if ((results != null) && (results < simpleMovements.Count))
             {
-                //crop and return list
-                return simpleMovements.GetRange(0, (int)results);
-            } else  //results = null, results = count, results > count
-            {
-                return simpleMovements;
+                //crop list
+                simpleMovements = simpleMovements.GetRange(0, (int)results);
             }
+
+            SimpleResponse simpleResponse = new SimpleResponse { };
+            simpleResponse.Time = UTCtoNZST(DateTime.UtcNow).ToShortTimeString();   //current NZ time
+            simpleResponse.SimpleMovements = simpleMovements;
+            
+            return simpleResponse;
         }
 
         /// <summary>
