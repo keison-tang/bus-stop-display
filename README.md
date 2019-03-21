@@ -7,7 +7,9 @@
 ## What?
 Project that aims to recreate a miniature version of the real-time boards seen at bus stops and stations around Auckland. These typically show the current time, stop number and estimated arrival times of bus services that travel past the stop.
 
-Currently, this project is able to display the stop number and a maximum of six of the nearest bus services. 
+Currently, this project is able to display:
+- Stop number
+- Maximum of six of the nearest bus services. 
 
 [Video Demo](https://www.youtube.com/watch?v=g6P-uVqlRpg)
 
@@ -36,6 +38,7 @@ A WiFi module periodically calls an API app hosted on Azure, which in turn calls
         - results [optional] : max number of results you want
     - Response
         - Content Type: application/json
+        - Current time
         - List of SimpleDeparture objects in JSON
             - Bus: short route code
             - Sch: scheduled time
@@ -44,23 +47,26 @@ A WiFi module periodically calls an API app hosted on Azure, which in turn calls
         - http://[YOUR API APP NAME].azurewebsites.net/api/departures?stop_id=3211&results=5
 
             ```bash
-            [
-                {
-                    "Bus": "871",
-                    "Sch": "7:42 PM",
-                    "Due": ""
-                },
-                {
-                    "Bus": "871",
-                    "Sch": "8:12 PM",
-                    "Due": ""
-                },
-                {
-                    "Bus": "871",
-                    "Sch": "8:42 PM",
-                    "Due": ""
-                }
-            ]
+            {
+                "Time" : "7:40 PM",
+                "SimpleMovements": [
+                    {
+                        "Bus": "871",
+                        "Sch": "7:42 PM",
+                        "Due": "2"
+                    },
+                    {
+                        "Bus": "871",
+                        "Sch": "8:12 PM",
+                        "Due": ""
+                    },
+                    {
+                        "Bus": "871",
+                        "Sch": "8:42 PM",
+                        "Due": ""
+                    }
+                ]
+            }
             ```
 
 ## Deploying API App to Azure
@@ -135,5 +141,5 @@ A WiFi module periodically calls an API app hosted on Azure, which in turn calls
 
 ## Future Work
 - Refactor backend API app for properness
-- API return current time and display on OLED
+- Parse time and display on OLED
 - API handle when there are no services available - either because of outage or there just aren't any buses
