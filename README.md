@@ -2,14 +2,14 @@
 
 <p align="center">
     <img src="images/full-view.jpg"/>
-    <br><br>
-    <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/g6P-uVqlRpg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </p>
 
 ## What?
 Project that aims to recreate a miniature version of the real-time boards seen at bus stops and stations around Auckland. These typically show the current time, stop number and estimated arrival times of bus services that travel past the stop.
 
 Currently, this project is able to display the stop number and a maximum of six of the nearest bus services. 
+
+[Video Demo](https://www.youtube.com/watch?v=g6P-uVqlRpg)
 
 ## How?
 A WiFi module periodically calls an API app hosted on Azure, which in turn calls an AT API. The purpose of the API app is to process the original payload into a simpler JSON schema containing only the necessary information required by the WiFi module. The simplified schema makes it suitable for memory and computationally constrained devices. The WiFi module then parses the JSON and then displays the information through a small OLED. 
