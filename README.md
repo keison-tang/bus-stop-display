@@ -97,7 +97,7 @@ A WiFi module periodically calls an API app hosted on Azure, which in turn calls
         - Install Adafruit GFX Library by Adafruit, version 1.3.4
         - Install Adafruit SSD1306 by Adafruit, version 1.2.9
         - Install ArduinoJson by Benoit Blanchon, version 5.13.4
-    - _If you want to skip the following instructions, just type your WiFi credentials and API endpoint into the sketch file. Also remove the #include <Credentials.h> line from the sketch (line 7). If you intend on putting your sketch on a public repo, I would recommend not skipping this, as, as your WiFi details won't be openly shared._ 
+    - _If you want to skip the following instructions, just type your WiFi credentials and API endpoint into the sketch file. Also remove the #include <Credentials.h> line from the sketch (line 7). If you intend on putting your sketch on a public repo, I would recommend not skipping this, as your WiFi details won't be openly shared._ 
         - Navigate to where your Arduino libraries are stored
         - Default on Windows: */Documents/Arduino/libraries/
         - You should see all the libraries you just installed
@@ -111,6 +111,24 @@ A WiFi module periodically calls an API app hosted on Azure, which in turn calls
 </center>
 
 ## Useful Links
+- Azure / API App
+    - [Azure Free Account](https://azure.microsoft.com/en-us/free/free-account-faq/)
+    - [API Apps](https://azure.microsoft.com/en-us/services/app-service/api/)
+    - [Routing in ASP.NET Web API](https://docs.microsoft.com/en-us/aspnet/web-api/overview/web-api-routing-and-actions/routing-in-aspnet-web-api)
+    - [Tutorial: Host a RESTful API with CORS in Azure App Service](https://docs.microsoft.com/en-us/azure/app-service/app-service-web-tutorial-rest-api)
+
+- ArduinoJSON
+    - [ArduinoJSON Deserialising](https://arduinojson.org/v5/doc/decoding/)
+    - [ArduinoJSON Assistant](https://arduinojson.org/v5/assistant/)
+    
+- OLED
+    - [OLED I2C Display Arduino Tutorial](https://startingelectronics.org/tutorials/arduino/modules/OLED-128x64-I2C-display/)
+    - [Using the SSD1306 Text/Graphics OLED Display module](http://engineeringnotes.blogspot.com/2013/07/using-ssd1306-textgraphics-display.html)
+
+- Project inspirations
+    - [Github: ArduinoBribus](https://github.com/joeybronner/arduinobribus)
+    - [Github: NextBus](https://github.com/jallier/NextBus)
+
 
 ## Future Work
 - Refactor backend API app for properness
