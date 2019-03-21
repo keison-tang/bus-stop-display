@@ -42,12 +42,13 @@ void setup() {
   display.setTextColor(WHITE);
   display.setFont(NULL);
 
-  display.setTextSize(2); //1: 6x8px 21x8chars, 2: 12x16px 10x4chars
-  display.setCursor(4, 0);
-  display.print("STOP# 3360");  //static text at the top of the OLED - show whatever text you like, max 10 chars
+  display.setTextSize(1); //1: 6x8px 21x8chars, 2: 12x16px 10x4chars
+  display.setCursor(0, 0);
+  display.print("STOP");  //static text at the top left of the OLED (header section)
+  display.setCursor(0, 8);
+  display.print("3360");
   display.display(); 
 
-  display.setTextSize(1);
   display.setTextColor(WHITE, BLACK); //to overwrite text with fresh background (otherwise text is superimposed)
   
 }
@@ -62,12 +63,22 @@ void loop() {
       String payload = http.getString();
 
       // Allocate JsonBuffer for max 6 results
-      const size_t capacity = JSON_ARRAY_SIZE(6) + 6*JSON_OBJECT_SIZE(3) + 180;
+      const size_t capacity = JSON_ARRAY_SIZE(6) + JSON_OBJECT_SIZE(2) + 6*JSON_OBJECT_SIZE(3) + 220;
       DynamicJsonBuffer jsonBuffer(capacity);
 
-      // Parse JSON object (which is just the array)
-      JsonArray& services = jsonBuffer.parseArray(payload);
+      // Parse JSON object 
+      JsonObject& json = jsonBuffer.parseObject(payload);
 
+      // Extract & display time
+      display.setTextSize(2);
+      display.setCursor(31, 0);  //pixel 31 to 127 = 96 px, which is enough for 8 x size 2 chars 
+      display.print(json["Time"].as<char*>());
+      display.print(" "); // extra space to clear off remanant char
+      display.setTextSize(1);
+      
+      // Extract the bus services array
+      JsonArray& services = json["SimpleMovements"];
+      
       // To keep count of which line we are updating
       int lineCount = 0;
 
