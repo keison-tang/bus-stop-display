@@ -4,7 +4,7 @@
 #include <Adafruit_GFX.h>       //Graphics
 #include <Adafruit_SSD1306.h>   //OLED hardware driver
 #include <ArduinoJson.h>        //Library for JSON parsing
-#include <Credentials.h>        //Custom library for credentials (path: */Documents/Arduino/libraries/Credentials)
+#include <Credentials.h>        //Library for WiFi credentials
 
 // OLED
 #define SCREEN_WIDTH   128  //in pixels
