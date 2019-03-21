@@ -1,8 +1,10 @@
 ﻿# bus-stop-display
 
-<center>
+<p align="center">
     <img src="images/full-view.jpg"/>
-</center>
+    <br><br>
+    <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/g6P-uVqlRpg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</p>
 
 ## What?
 Project that aims to recreate a miniature version of the real-time boards seen at bus stops and stations around Auckland. These typically show the current time, stop number and estimated arrival times of bus services that travel past the stop.
@@ -105,10 +107,11 @@ A WiFi module periodically calls an API app hosted on Azure, which in turn calls
         - Remove the .example suffixes
         - In the header file, replace the placeholders with your own credentials
     - Compile and upload the sketch
-    - You should see something like this!
-<center>
+    - Wait a few seconds for initialisation, then you should see something like this!
+
+<p align="center">
     <img src="images/oled-view-cropped.jpg" width="250"/>
-</center>
+</p>
 
 ## Useful Links
 - Azure / API App
