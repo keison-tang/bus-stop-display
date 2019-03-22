@@ -5,11 +5,12 @@
 </p>
 
 ## What?
-Project that aims to recreate a miniature version of the real-time boards seen at bus stops and stations around Auckland. These typically show the current time, stop number and estimated arrival times of bus services that travel past the stop.
+Project that aims to recreate a miniature version of the real-time boards seen at bus stops and stations around Auckland. These typically show the current time, stop number and scheduled bus services (route, destination, scheduled time and estimated arrival time).
 
 Currently, this project is able to display:
 - Stop number
-- Maximum of six of the nearest bus services. 
+- Current time
+- Maximum of six of the nearest bus services
 
 [Video Demo](https://youtu.be/kkRMtoPPfk8)
 
@@ -141,5 +142,4 @@ A WiFi module periodically calls an API app hosted on Azure, which in turn calls
 
 ## Future Work
 - Refactor backend API app for properness
-- Parse time and display on OLED
 - API handle when there are no services available - either because of outage or there just aren't any buses
