@@ -12,7 +12,7 @@ Currently, this project is able to display:
 - Current time
 - Maximum of six of the nearest bus services
 
-[Video Demo](https://youtu.be/kkRMtoPPfk8)
+<a href="https://youtu.be/kkRMtoPPfk8" target="_blank"> Video Demo </a>
 
 ## How?
 A WiFi module periodically calls an API app hosted on Azure, which in turn calls an AT API. The purpose of the API app is to process the original payload into a simpler JSON schema containing only the necessary information required by the WiFi module. The simplified schema makes it suitable for memory and computationally constrained devices. The WiFi module then parses the JSON and then displays the information through a small OLED. 
